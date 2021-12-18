@@ -1,0 +1,7 @@
+vdd vdd 0 0.9
+vss vss 0 0
+vcasc casc 0 0.7
+vin in 0 0.5
+r1 vdd outp 100
+m1 outp casc n1 nch1
+m2 n1 in vss nch1

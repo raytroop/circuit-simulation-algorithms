@@ -1,0 +1,18 @@
+*
+vdd vdd 0 0.9
+vss vss 0 0
+vinp in1 0 sin(0 1.95 1e9 0 0)
+vinn in2 0 sin(0 1.95 1e9 0.5e-9 0)
+r1 vdd inp 30
+r2 inp vss 150
+r3 vdd inn 30
+r4 inn vss 150
+r5 vdd outp 100
+r6 vdd outn 100
+c1 in1 inp 1e-11
+c2 in2 inn 1e-11
+i1 vs 0 1e-3
+m1 outn inp vs nch1
+m2 outp inn vs nch1
+.options MaxSimTime=2e-9 reltol=1e-7 FixedTimeStep=Tue deltaT=1e-12 iabstol=1e-12 vabstol=1e-8 lteratio=200000
+.plot v(outp) v(outn)

@@ -1,0 +1,21 @@
+*
+vdd vdd 0 0.9
+vss vss 0 0
+vinp in1 vss sin(0 0.3 1e9 0 0)
+vinn in2 vss sin(0 0.3 1e9 5e-10 0)
+r1 vdd inp 100
+r2 inp vss 100
+r3 vdd inn 100
+r4 inn vss 100
+r5 vdd outp 100
+r6 vdd outn 100
+c1 in1 inp 1e-12
+c2 in2 inn 1e-12
+i1 vs vss sin(1e-3 100e-6 1.001e9 0 0)
+m1 outn inp vs nch 
+m2 outp inn vs nch 
+i2 vs2 vss sin(1e-3 100e-6 1.001e9 4.995e-10 0)
+m3 outp inp vs2 nch 
+m4 outn inn vs2 nch 
+.options MaxSimTime=2e-6 reltol=1e-3 FixedTimeStep=Tue deltaT=2e-11 iabstol=1e-6 vabstol=1e-6 MaxNewtonIter=15 ThreeLevelStep=True
+.plot v(outp) v(outn)

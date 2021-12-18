@@ -1,0 +1,9 @@
+*
+v1 in 0 sin(1 0.1 1e9 0 0)
+v2 vss 0 0
+l1 in a 1e-9
+r1 a b 100
+c1 a b 1.2e-12
+r2 b vss 230
+.options deltaT=1e-10 NIterations=2000
+.plot v(a)

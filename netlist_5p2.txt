@@ -1,0 +1,13 @@
+*
+vdd vdd 0 0.9
+vss vss 0 0
+r1 vdd inp 30
+r2 inp vss 150
+r3 vdd inn 30
+r4 inn vss 150
+i1 vs vss 1e-3
+m1 vdd inp vs nch
+m2 vdd inn vs nch
+.options MaxNewtonIterations=10
+.ic v(vdd)=1 v(vss)=0 v(inp)=0 v(vs)=-2
+.plot v(vs)

@@ -1,0 +1,10 @@
+*
+vdd vdd 0 0.9
+vin in 0 sin(0.45 0.45 1e9 0 0) 
+vss vss 0 0
+mn1 out in vss nch2
+mp2 out in vdd pch2
+.options MaxSimTime=2e-9 reltol=1e-2 FixedTimeStep=Tue deltaT=1e-12 iabstol=1e-3 vabstol=1e-3 lteratio=1000000 MaxNewtonIter=15
+.ic v(in)=0.45 v(out)=0.45
+.plot v(out) v(in)
+*.write ../pictures/Diffpair_RealerTran_PandN_trap.csv v(out) v(in)

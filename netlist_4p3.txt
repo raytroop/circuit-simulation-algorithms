@@ -1,0 +1,6 @@
+*
+vdd vdd 0 1
+vss vss 0 0
+r1 vdd out 100
+r2 out vss 50
+c1 out vss 1e-12

@@ -1,0 +1,8 @@
+*
+vdd vdd 0 0.9
+vss vss 0 0
+m1 out in vdd pch1
+m2 out in vss nch1
+vin in 0 0.45
+r3 out vss 100000
+.ic v(vdd)=1 v(vss)=0 v(out)=0 v(in)=1

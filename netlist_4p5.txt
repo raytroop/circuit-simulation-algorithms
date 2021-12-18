@@ -1,0 +1,17 @@
+*
+vdd vdd 0 0
+vss vss 0 0
+vinp inp 0 1
+r5 vdd outp 1000
+r6 vdd outn 1000
+c1 vdd outp 1e-12
+c2 vdd outn 1e-12
+i1 vs vss 0
+m1 outn inp vs nch
+m2 outp inn vs nch
+m3 vdd outp op nch
+i2 op vss 0
+c3 op vss 1.5e-12
+vstab inn op 0
+istab vss inn 0
+.plot v(op) v(outp)

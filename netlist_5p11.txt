@@ -1,0 +1,19 @@
+*
+vdd vdd 0 1
+vin in 0 sin(0.45 0.45 1e9 0 0)
+vss vss 0 0
+mn1 o1 in vss nch
+mp1 o1 in vdd pch
+mn2 o2 o1 vss nch
+mp2 o2 o1 vdd pch
+mn3 o3 o2 vss nch
+mp3 o3 o2 vdd pch
+mn4 out o3 vss nch
+mp4 out o3 vdd pch
+c1 o1 vss 1e-15
+c2 o2 vss 1e-15
+c3 o3 vss 1e-15
+c4 out vss 1e-15
+.options reltol=1e-3 vabstol=1e-6 iabstol=1e-12 MaxSimTime=5e-9 GlobalTruncation=Tre
+.ic v(in)=0 v(o1)=1 v(o2)=0 v(o3)=1 v(out)=0
+.plot v(in) v(o1) v(out)

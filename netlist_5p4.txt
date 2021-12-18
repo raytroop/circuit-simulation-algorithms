@@ -1,0 +1,20 @@
+*
+vdd vdd 0 2
+vss vss 0 0
+m1 out a vdd pch
+m2 a a vdd pch
+q1 out out vss npn
+q2 a out d npn
+q3 a out d npn
+q4 a out d npn
+q5 a out d npn
+q6 a out d npn
+q7 a out d npn
+q8 a out d npn
+q9 a out d npn
+q10 a out d npn
+q11 a out d npn
+r2 d vss 59.51
+.ic v(a)=1.5 v(out)=0.9 v(d)=0.06 v(vdd)=2 v(vss)=0
+.options MaxNewtonIterations=40
+.plot v(out) v(a) v(d)

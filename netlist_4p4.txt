@@ -1,0 +1,11 @@
+*
+vdd in 0 0
+vss vss 0 0
+r1 in a 100
+r2 a vss 50
+c1 a vss 1e-12
+l1 a b 1e-9
+r3 b c 10
+r4 c out 100
+c2 c out 1e-13
+c3 out vss 1e-11

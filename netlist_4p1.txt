@@ -1,0 +1,7 @@
+*
+v1 in 0 1
+vs vs 0 0
+l1 in a 1e-9
+r1 a b 100
+c1 a b 1.2e-12
+r2 b vs 230

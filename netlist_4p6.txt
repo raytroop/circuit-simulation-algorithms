@@ -1,0 +1,13 @@
+*
+vp1 p1 0 0
+vss vss 0 0
+r1 p1 in 50
+r2 in vss 50
+c1 in vss 1e-12
+l1 in b 1e-9
+r3 b c 10
+r4 c out 100
+c2 c out 1e-13
+c3 out vss 1e-11
+r5 out p2 50
+vp2 p2 vss 0

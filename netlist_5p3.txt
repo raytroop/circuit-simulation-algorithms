@@ -1,0 +1,9 @@
+*
+vdd vdd 0 1
+vss vss 0 0
+m2 vss in out pch
+vin in vss 0.2
+i1 vdd out 1e-3
+.options MaxNewtonIterations=10
+.ic v(vdd)=1 v(vss)=0 v(in)=0.2 v(out)=3
+.plot v(out)

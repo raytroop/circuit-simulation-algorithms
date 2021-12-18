@@ -1,0 +1,14 @@
+*
+vdd vdd 0 0.9
+vss vss 0 0
+l1 vdd outp 1e-9
+l2 vdd outn 1e-9
+c1 vdd outp 1e-12
+c2 vdd outn 1e-12
+r1 vdd outp 1e3
+r2 vdd outn 1e3
+m1 outp outn vss nch1
+m2 outn outp vss nch1
+i1 outp vss pwl(0 0 1e-8 0 1.1e-8 1e-3 1.2e-8 0)
+.options MaxSimTime=6e-8 reltol=1e-3 FixedTimeStep=Tre deltaT=5e-12 iabstol=1e-6 vabstol=1e-6 MaxNewtonIter=15 ThreeLevelStep=Tue
+.plot v(outp) v(outn)
