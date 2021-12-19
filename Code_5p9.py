@@ -183,6 +183,8 @@ if run_PNOISE:
         val[2][iter]=abs(sol[3*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=20*math.log10(val[1][iter])
     plt.plot(val[3])
+    plt.show()
 else:
     plt.plot(abs(VpTime))
+    plt.show()
 

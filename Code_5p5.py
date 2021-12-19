@@ -177,6 +177,7 @@ for Newtoniter in range(NewIter):
     val[Newtoniter]=sol[2]
 
 plt.plot(val)
+plt.show()
 
 
 
