@@ -44,6 +44,16 @@ Optdict['method']='trap'
 Optdict['CheckLTE']='True'
 #
 #
+'''
+5.4 Transient Nonlinear Simulation
+As a result, we have Code 5.6 in Sect. 5.6.6. This code will now be used for all our subsequent simulations using transient technique
+'''
+# DeviceCount=ana.readnetlist('netlist_5p7.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p8.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p9.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p10.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p11.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p12.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 DeviceCount=ana.readnetlist('netlist_5p13.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #

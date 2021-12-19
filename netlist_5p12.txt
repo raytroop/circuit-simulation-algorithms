@@ -22,5 +22,6 @@ c2 int21 vss 1e-14
 c3 int22 vss 1e-14
 .plot v(inp) v(inp2)
 .ic v(inp2)=0.45 v(int21)=0.45 v(int22)=0.45
-.options reltol=1e-3 vabstol=1e-3 iabstol=1e-3 deltaT=1e-10 MaxSimTime=1e-7 GlobalTruncation=Tre MaxTimeStep=1e-1
+.options reltol=1e-3 vabstol=1e-3 iabstol=1e-3 deltaT=1e-10 MaxSimTime=1e-7 GlobalTruncation=True MaxTimeStep=1e-1
+*.options reltol=1e-3 vabstol=1e-3 iabstol=1e-3 deltaT=1e-10 MaxSimTime=1e-7 GlobalTruncation=False MaxTimeStep=1e-1
 *.write ../pictures/PointLocal.csv v(inp) v(inp2)

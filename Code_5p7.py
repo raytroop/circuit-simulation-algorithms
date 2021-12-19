@@ -9,6 +9,9 @@ import numpy as np
 import sys
 import analogdef as ana
 
+'''
+Code5.7 is an implementation of the shooting method concept with capacitors as the dynamic element.
+'''
 #
 #
 MaxNumberOfDevices=100

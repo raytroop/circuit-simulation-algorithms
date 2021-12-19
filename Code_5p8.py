@@ -11,6 +11,10 @@ import matplotlib.pyplot as plt
 import math
 import analogdef as ana
 
+'''
+ harmonic balance simulation implementation
+'''
+
 #
 #
 MaxNumberOfDevices=100
@@ -143,7 +147,16 @@ while Newtoniter < NewIter and abs(max(f)) > iabstol:
 for j in range(TotalHarmonics):
     Vn[j]=sol[Nodes.index('outp')*TotalHarmonics+j]
 VnTime=ana.idft(Vn,TotalHarmonics)
-plt.plot(TimePnts,VnTime)
+
+if run_PAC:
+    _, axs = plt.subplots(nrows=2)
+else:
+    _, axs = plt.subplots(nrows=1)
+
+axs[0].plot(TimePnts,VnTime)
+axs[0].set_title('Voltage vs time')
+axs[0].set_xlabel('time [s]')
+axs[0].set_ylabel('Voltage [V]')
 
 if run_PAC:
     STA_rhs=[0 for i in range(MatrixSize)]
@@ -167,10 +180,15 @@ if run_PAC:
                         STA_rhs[(NumberOfNodes+i)*TotalHarmonics+row]=-(row==Jacobian_Offset)
         sol=np.matmul(np.linalg.inv(Jacobian),STA_rhs)
         val[0][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset])
-        val[1][iter]=20*math.log10(abs(sol[6*TotalHarmonics+Jacobian_Offset+1]))
+        val[1][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+1])
         val[2][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+3])
-    plt.plot(val[1])
+    axs[1].plot([20*math.log10(x) for x in val[1]])
+    axs[1].set_title('PAC')
+    axs[1].set_xlabel('frequency [MHz]')
+    axs[1].set_ylabel('[dB]')
+
+plt.show()
 
 
 
