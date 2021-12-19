@@ -1,6 +1,6 @@
 *
 vdd vdd 0 0.9
-vin in 0 sin(0.45 0.45 1e9 0 0) 
+vin in 0 sin(0.45 0.45 1e9 0 0)
 vss vss 0 0
 mn1 out in vss nch2
 mp2 out in vdd pch2

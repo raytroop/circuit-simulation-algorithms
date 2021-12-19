@@ -31,8 +31,8 @@ Optionsdict={}
 #
 DeviceCount=ana.readnetlist('netlist_4p5.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
-MatrixSize=DeviceCount+len(Nodes) 
+#
+MatrixSize=DeviceCount+len(Nodes)
 #
 #
 STA_matrix=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -44,7 +44,7 @@ for i in range(DeviceCount):
     if DevType[i]=='capacitor' or DevType[i]=='inductor':
         DevValue[i]*=(0+1j)
     if DevType[i] == 'resistor' or DevType[i] == 'inductor':
-        STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=-DevValue[i]        
+        STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=-DevValue[i]
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=1
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=-1
@@ -76,7 +76,7 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=1/DevValue[i]
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-1/DevValue[i]
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1    
+        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
 #
 #
 print('Setting up stab run 1')
@@ -88,9 +88,9 @@ for i in range(DeviceCount):
             StabProbeIndex=i
             print('Found stability probe')
         else:
-            STA_rhs[NumberOfNodes+i]=0    
+            STA_rhs[NumberOfNodes+i]=0
 #
-#           
+#
 val=[[0 for i in range(100)] for j in range(MatrixSize)]
 freqpnts=[0 for i in range(100)]
 D=[0+0j for i in range(100)]
@@ -99,7 +99,7 @@ for iter in range(100):
     omega=iter*FreqStep*2*3.14159265
     for i in range(DeviceCount):
         if DevType[i]=='capacitor':
-            if DevNode1[i] != '0' : 
+            if DevNode1[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=DevValue[i]*omega
             if DevNode2[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=-DevValue[i]*omega
@@ -112,21 +112,21 @@ for iter in range(100):
         val[j][iter]=abs(sol[j])
         if j<NumberOfNodes:
             if Nodes[j]==VElabel:
-                D[iter]=sol[j] 
+                D[iter]=sol[j]
         if j==NumberOfNodes+StabProbeIndex:
             B[iter]=sol[j]
-            
 
-print('Setting up stab run 2')                
+
+print('Setting up stab run 2')
 for i in range(DeviceCount):
     if DevType[i]=='VoltSource':
-        STA_rhs[NumberOfNodes+i]=0    
+        STA_rhs[NumberOfNodes+i]=0
     if DevType[i]=='CurrentSource':
         if DevLabel[i]=='istab':
             STA_rhs[NumberOfNodes+i]=1
             print('Found stability current probe')
 #
-#           
+#
 val=[[0 for i in range(100)] for j in range(MatrixSize)]
 freqpnts=[0 for i in range(100)]
 C=[0+0j for i in range(100)]
@@ -135,7 +135,7 @@ for iter in range(100):
     omega=iter*FreqStep*2*3.14159265
     for i in range(DeviceCount):
         if DevType[i]=='capacitor':
-            if DevNode1[i] != '0' : 
+            if DevNode1[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=DevValue[i]*omega
             if DevNode2[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=-DevValue[i]*omega
@@ -150,9 +150,9 @@ for iter in range(100):
             if Nodes[j]==VElabel:
                 C[iter]=sol[j]
         if j==NumberOfNodes+StabProbeIndex:
-            A[iter]=-sol[j] 
+            A[iter]=-sol[j]
 
-T=[0+0j for i in range(100)]                            
+T=[0+0j for i in range(100)]
 magdB=[0 for i in range(100)]
 phasedegree=[0 for i in range(100)]
 for iter in range(100):
@@ -171,7 +171,7 @@ for i in range(100-1):
 for i in range(100-1):
     if phasedegree[i]*phasedegree[i+1]<0:
         print('Gainmargin: ',-magdB[i])
-        
+
 #
 plt.xscale('log')
 plt.title('Gain/Phase vs Frequency')
@@ -184,4 +184,4 @@ plt.subplot(111).legend(loc='upper center', bbox_to_anchor=(0.8, 0.97), shadow=T
 plt.show()
 #
 if len(Printdict)> 0:
-    ana.printdata(Printdict,NumberOfNodes,freqpnts,val,Nodes)        
+    ana.printdata(Printdict,NumberOfNodes,freqpnts,val,Nodes)

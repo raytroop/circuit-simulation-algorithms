@@ -37,7 +37,7 @@ Optdict={}
 #
 DeviceCount=ana.readnetlist('netlist_5p6.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-# 
+#
 NumberOfNodes=len(Nodes)
 MatrixSize=DeviceCount+len(Nodes)
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -106,24 +106,24 @@ for i in range(DeviceCount):
             STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         if DevNode3[i] != '0' :
             STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1        
+            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         if DevNode1[i] != '0' :
             if DevNode2[i] != '0' and DevNode3[i] != '0':
-                STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2              
+                STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2
             if DevNode2[i] == '0':
                 STA_nonlinear[Nodes.index(DevNode1[i])]=sol[Nodes.index(DevNode3[i])]**2
-                STA_nonlinear[NumberOfNodes+1]=(sol[Nodes.index(DevNode3[i])])**2                              
+                STA_nonlinear[NumberOfNodes+1]=(sol[Nodes.index(DevNode3[i])])**2
             if DevNode3[i] == '0':
                 STA_nonlinear[Nodes.index(DevNode1[i])]=sol[Nodes.index(DevNode2[i])]**2
         if DevNode3[i] != '0' :
             if DevNode2[i] != '0':
-                STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2                
+                STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2
             else:
                 STA_nonlinear[Nodes.index(DevNode3[i])]=-sol[Nodes.index(DevNode3[i])]**2
 #
-f=numpy.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear    
+f=numpy.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 SimTime=0
 NewIter=15
 val=[0 for i in range(NewIter)]
@@ -144,7 +144,7 @@ for Newtoniter in range(NewIter):
         if DevType[i]=='transistor':
             if DevNode1[i] != '0' :
                 if DevNode2[i] != '0' and DevNode3[i] != '0':
-                    STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2                  
+                    STA_nonlinear[NumberOfNodes+i]=(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])**2
                 if DevNode2[i] == '0':
                     STA_nonlinear[NumberOfNodes+i]=sol[Nodes.index(DevNode3[i])]^2
                 if DevNode3[i] == '0':
@@ -157,66 +157,66 @@ for Newtoniter in range(NewIter):
             Jacobian[i][j]=STA_matrix[i][j]
     for i in range(DeviceCount):
         if DevType[i]=='transistor':
-            Jacobian[NumberOfNodes+i][NumberOfNodes+i]=DevValue[i] 
+            Jacobian[NumberOfNodes+i][NumberOfNodes+i]=DevValue[i]
             if DevNode1[i] != '0' :
                 if DevNode2[i] != '0' and DevNode3[i] != '0':
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=2*PFET*(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-2*PFET*(sol[Nodes.index(DevNode2[i])]-sol[Nodes.index(DevNode3[i])])
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
                     Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
-                elif DevNode2[i] == '0':  
+                elif DevNode2[i] == '0':
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-1
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                    
+                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
                 elif DevNode3[i] == '0':
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=1
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                                 
+                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
     sol=sol-numpy.matmul(numpy.linalg.inv(Jacobian),f)
     Jac_inv=numpy.linalg.inv(Jacobian)
     val[Newtoniter]=sol[2]
 
 plt.plot(val)
-        
-        
 
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

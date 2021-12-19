@@ -32,7 +32,7 @@ Optdict['MaxNewtonIterations']=int(5)
 #
 DeviceCount=ana.readnetlist('netlist_5p1.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-# 
+#
 NumberOfNodes=len(Nodes)
 MatrixSize=DeviceCount+len(Nodes)
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -97,7 +97,7 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         VG=sol[Nodes.index(DevNode2[i])]
         VS=sol[Nodes.index(DevNode3[i])]
         Vgs=VG-VS
@@ -105,9 +105,9 @@ for i in range(DeviceCount):
             Vgs=-Vgs
         STA_nonlinear[NumberOfNodes+i]=Vgs**2
 
-f=numpy.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear    
+f=numpy.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 NewIter=int(Optdict['MaxNewtonIterations'])
 val=[[0 for i in range(NewIter+1)] for j in range(MatrixSize)]
 for j in range(MatrixSize):
@@ -125,7 +125,7 @@ for Newtoniter in range(NewIter):
             if DevType[i]=='VoltSource':
                 STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
             if DevType[i]=='CurrentSource':
-                STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)                
+                STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
         if DevType[i]=='transistor':
                 VG=sol[Nodes.index(DevNode2[i])]
                 VS=sol[Nodes.index(DevNode3[i])]
@@ -148,7 +148,7 @@ for Newtoniter in range(NewIter):
             if DevModel[i][0]=='p':
                 PFET=-1
                 Vgs=-Vgs
-            else: 
+            else:
                 PFET=1
             Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=2*PFET*Vgs
             Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-2*PFET*Vgs

@@ -40,7 +40,7 @@ Optionsdict['GlobalTruncation']=True
 #
 DeviceCount=ana.readnetlist('netlist_4p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
+#
 MatrixSize=DeviceCount+len(Nodes)
 STA_matrix=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
 STA_rhs=[0 for i in range(MatrixSize)]
@@ -88,13 +88,13 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=0
         STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
 #
-#        
+#
 val=[[0 for i in range(NIterations)] for j in range(MatrixSize)]
 timeVector=[0 for i in range(NIterations)]
 PredMatrix=[[0 for i in range(2)] for j in range(2)]
 Predrhs=[0 for i in range(2)]
 for iter in range(NIterations):
-    SimTime=iter*deltaT       
+    SimTime=iter*deltaT
     STA_inv=numpy.linalg.inv(STA_matrix)
     solm2=[solm1[i] for i in range(MatrixSize)]
     solm1=[solold[i] for i in range(MatrixSize)]
@@ -142,4 +142,4 @@ for iter in range(NIterations):
             print('LTE NOT converging, change time step')
             sys.exit(0)
 
-ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)    
+ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)

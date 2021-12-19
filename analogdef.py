@@ -31,24 +31,24 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
     line=myfile.readline()
     while line !='' :
         DevType[DeviceCount]='empty'
-        if line[0]=='*': 
+        if line[0]=='*':
             print('comment')
-        if line[0]=='v': 
-            print('VoltSource') 
+        if line[0]=='v':
+            print('VoltSource')
             DevType[DeviceCount]='VoltSource'
         if line[0]=='i':
             print('CurrSource')
             DevType[DeviceCount]='CurrentSource'
-        if line[0]=='r': 
-            print('resistor') 
+        if line[0]=='r':
+            print('resistor')
             DevType[DeviceCount]='resistor'
         if line[0]=='f':
             print('Special Oscillator filter found')
             DevType[DeviceCount]='oscfilter'
-        if line[0]=='l': 
+        if line[0]=='l':
             print('inductor')
             DevType[DeviceCount]='inductor'
-        if line[0]=='c': 
+        if line[0]=='c':
             print('capacitor')
             DevType[DeviceCount]='capacitor'
         if line[0]=='m':
@@ -85,7 +85,7 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                         print('Syntax Error in .plot statement')
                         sys.exit()
                 else:
-                    print('Warning: Odd characters in .plot statement \'',ConditionSplit,'\'')   
+                    print('Warning: Odd characters in .plot statement \'',ConditionSplit,'\'')
         if re.split(' ',line)[0]=='.write':
             print('Write Statement')
             lineSplit=re.split(' ',line)
@@ -101,7 +101,7 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                         print('Syntax Error in .write statement')
                         sys.exit()
                 else:
-                    print('Warning: Odd characters in .write statement \'',ConditionSplit,'\'')   
+                    print('Warning: Odd characters in .write statement \'',ConditionSplit,'\'')
         if re.split(' ',line)[0]=='.options':
             print('Option Statement')
             lineSplit=re.split(' ',line)
@@ -117,14 +117,14 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                             print('Syntax Error in .options statement')
                             sys.exit()
                 else:
-                    print('Warning: Odd characters in .options statement \'',ConditionSplit,'\'')                    
+                    print('Warning: Odd characters in .options statement \'',ConditionSplit,'\'')
         if DevType[DeviceCount]!='empty':
             if DevType[DeviceCount] != 'transistor' and DevType[DeviceCount] != 'bipolar':
-                try: 
+                try:
                     DevLabel[DeviceCount]=line.split(' ')[0]
-                except: 
-                    print('Syntax Error in line:',line) 
-                    sys.exit();          
+                except:
+                    print('Syntax Error in line:',line)
+                    sys.exit();
                 try:
                     DevNode1[DeviceCount]=line.split(' ')[1]
                 except:
@@ -133,7 +133,7 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                 if DevType[DeviceCount] != 'VoltSource' and DevType[DeviceCount] != 'CurrentSource' and DevNode1[DeviceCount]=='0':
                     print('Error: Node \'0\' only allowed for independent sources')
                     print('line',line)
-                    sys.exit()                    
+                    sys.exit()
                 try:
                     DevNode2[DeviceCount]=line.split(' ')[2]
                 except:
@@ -142,7 +142,7 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                 if DevType[DeviceCount] != 'VoltSource' and DevType[DeviceCount] != 'CurrentSource' and DevNode2[DeviceCount]=='0':
                     print('Error: Node \'0\' only allowed for independent sources')
                     print('line',line)
-                    sys.exit()                    
+                    sys.exit()
                 try:
                     DevValue[DeviceCount]=float(line.split(' ')[3])
                 except:
@@ -186,7 +186,7 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                             srcdict['Amplitude']=float(re.split((' |\('),line)[5])
                         except:
                             print('Syntax Error in line:',line)
-                            sys.exit();    
+                            sys.exit();
                         try:
                             srcdict['Freq']=float(re.split((' |\('),line)[6])
                         except:
@@ -206,55 +206,55 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                 if DevNode1[DeviceCount] not in Nodes and DevNode1[DeviceCount]!='0':
                     Nodes.append(DevNode1[DeviceCount])
                 if DevNode2[DeviceCount] not in Nodes and DevNode2[DeviceCount]!='0':
-                    Nodes.append(DevNode2[DeviceCount])            
+                    Nodes.append(DevNode2[DeviceCount])
             else:
                 try:
                     DevLabel[DeviceCount]=line.split(' ')[0]
-                except: 
-                    print('Syntax Error in line:',line) 
+                except:
+                    print('Syntax Error in line:',line)
                     sys.exit();
                 try:
                     DevNode1[DeviceCount]=line.split(' ')[1]
-                except: 
-                    print('Syntax Error in line:',line) 
+                except:
+                    print('Syntax Error in line:',line)
                     sys.exit();
                 if DevNode1[DeviceCount]=='0':
                     print('Error: Node \'0\' only allowed for independent sources')
-                    print('line',line)                    
-                    sys.exit()                    
+                    print('line',line)
+                    sys.exit()
                 try:
                     DevNode2[DeviceCount]=line.split(' ')[2]
-                except: 
-                    print('Syntax Error in line:',line) 
+                except:
+                    print('Syntax Error in line:',line)
                     sys.exit();
                 if DevNode2[DeviceCount]=='0':
                     print('Error: Node \'0\' only allowed for independent sources')
                     print('line',line)
-                    sys.exit()                      
+                    sys.exit()
                 try:
                     DevNode3[DeviceCount]=line.split(' ')[3]
-                except: 
-                    print('Syntax Error in line:',line) 
+                except:
+                    print('Syntax Error in line:',line)
                     sys.exit();
                 if DevNode3[DeviceCount]=='0':
                     print('Error: Node \'0\' only allowed for independent sources')
                     print('line',line)
-                    sys.exit()  
+                    sys.exit()
                 try:
                     DevModel[DeviceCount]=line.split(' ')[4]
                     DevModel[DeviceCount]=DevModel[DeviceCount].rstrip('\n')
                     modelIndex=findmodelIndex(modeldict,DevModel[DeviceCount])
-                except: 
-                    print('Syntax Error in line4:',line) 
+                except:
+                    print('Syntax Error in line4:',line)
                     sys.exit();
                 DevValue[DeviceCount]=-1/modeldict[modelIndex]['K']#-1/K
                 if DevNode1[DeviceCount] not in Nodes and DevNode1[DeviceCount]!='0':
                     Nodes.append(DevNode1[DeviceCount])
                 if DevNode2[DeviceCount] not in Nodes and DevNode2[DeviceCount]!='0':
-                    Nodes.append(DevNode2[DeviceCount])   
+                    Nodes.append(DevNode2[DeviceCount])
                 if DevNode3[DeviceCount] not in Nodes and DevNode3[DeviceCount]!='0':
-                    Nodes.append(DevNode3[DeviceCount])     
-            DeviceCount+=1 
+                    Nodes.append(DevNode3[DeviceCount])
+            DeviceCount+=1
             if DeviceCount>=MaxNDevices:
                 print('Too many devices in the netlist: Max is set to ',MaxNDevices)
                 sys.exit()
@@ -294,8 +294,8 @@ def findmodelIndex(modeldict,name):
             return i
     print('model name ',name,' is not found in modelfile' )
     sys.exit()
-        
-    
+
+
 def getSourceValue(DevValue,SimTime):
     if type(DevValue)==float:
         return DevValue
@@ -319,8 +319,8 @@ def getSourceValue(DevValue,SimTime):
                 PrevValue=DevValue[TimeIndex-1]['value']
                 NextValue=DevValue[TimeIndex]['value']
                 return (NextValue-PrevValue)*(SimTime-PrevTime)/(NextTime-PrevTime)+PrevValue
-            
-    
+
+
 def findParameter(modeldict,modelname,parameterName):
     for i in range(len(modeldict)):
         if modeldict[i]['modelName']==modelname:
@@ -328,8 +328,8 @@ def findParameter(modeldict,modelname,parameterName):
                 return modeldict[i][parameterName]
             except:
                 print('Error: Parameter ',parameterName,' not found in ',modeldict[i])
-                
-                
+
+
 def setupDicts(SimDict,SetupDict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MatrixSize,Jacobian,STA_matrix,STA_rhs,STA_nonlinear,sol,solm1,solm2,f):
     SetupDict['NumberOfNodes']=10
     SetupDict['NumberOfCurrents']=10
@@ -364,8 +364,8 @@ def setupDicts(SimDict,SetupDict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevN
     SimDict['solm2']=solm2
     SimDict['f']=f
 
-def plotdata(Plotdict,NumberOfNodes,retime,reval,Nodes):  
-    if len(Plotdict)> 0:              
+def plotdata(Plotdict,NumberOfNodes,retime,reval,Nodes):
+    if len(Plotdict)> 0:
         ax = plt.subplot(111)
         for j in range(NumberOfNodes):
             for i in range(len(Plotdict)):
@@ -375,8 +375,8 @@ def plotdata(Plotdict,NumberOfNodes,retime,reval,Nodes):
         ax.legend(loc='upper center', bbox_to_anchor=(1.2, 0.97), shadow=True, ncol=2)
         plt.xlabel('time [s]')
         plt.ylabel('Voltage [V]')
-        plt.show()    
-    
+        plt.show()
+
 def printdata(Printdict,NumberOfNodes,retime,reval,Nodes):
     if len(Printdict)> 0:
         fp=open(Printdict[0]['filename'],"w+")
@@ -392,8 +392,8 @@ def printdata(Printdict,NumberOfNodes,retime,reval,Nodes):
                         fp.write("%g " % reval[j][i])
             fp.write('\n')
         fp.close()
-    
-    
+
+
 def build_SysEqns(SetupDict, SimDict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
     DevType=SetupDict['DevType']
@@ -414,9 +414,9 @@ def build_SysEqns(SetupDict, SimDict, modeldict):
         if DevType[i]=='bipolar':
             build_SysEqn_bipolar(i, SetupDict, SimDict, modeldict)
 
-def update_SysEqns(SimTime, SetupDict, SimDict, modeldict):    
+def update_SysEqns(SimTime, SetupDict, SimDict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
-    DevType=SetupDict['DevType']    
+    DevType=SetupDict['DevType']
     deltaT=SimDict['deltaT']
     for i in range(DeviceCount):
         if DevType[i]=='capacitor':
@@ -432,41 +432,41 @@ def update_SysEqns(SimTime, SetupDict, SimDict, modeldict):
         if DevType[i]=='bipolar':
             update_SysEqn_bipolar(i, SetupDict, SimDict, modeldict)
 
-def build_Jacobian(SetupDict, SimDict, modeldict):    
+def build_Jacobian(SetupDict, SimDict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
-    DevType=SetupDict['DevType']    
+    DevType=SetupDict['DevType']
     for i in range(DeviceCount):
         if DevType[i]=='transistor':
             build_Jacobian_MOS(i, SetupDict, SimDict, modeldict)
         if DevType[i]=='bipolar':
             build_Jacobian_bipolar(i, SetupDict, SimDict, modeldict)
-            
-def build_Jacobian_HB(SetupDict, Simdict, modeldict):    
+
+def build_Jacobian_HB(SetupDict, Simdict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
-    DevType=SetupDict['DevType']    
+    DevType=SetupDict['DevType']
     for i in range(DeviceCount):
         if DevType[i]=='transistor':
             build_Jacobian_MOS_HB(i, SetupDict, Simdict, modeldict)
-      
+
 def update_SysEqns_HB(SetupDict, SimDict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
     DevType=SetupDict['DevType']
     TotalHarmonics=SetupDict['TotalHarmonics']
     for i in range(DeviceCount):
-        for row in range(TotalHarmonics):   
+        for row in range(TotalHarmonics):
             if DevType[i]=='transistor':
                 update_SysEqn_MOS_HB(i, row, SetupDict, SimDict, modeldict)
             if DevType[i]=='bipolar':
                 print('Error: Harmonic Balance for Bipolar Transistors not implemented')
                 sys.exit(0)
-            
-            
+
+
 def build_SysEqns_HB(SetupDict, SimDict, modeldict):
     DeviceCount=SetupDict['DeviceCount']
     DevType=SetupDict['DevType']
     TotalHarmonics=SetupDict['TotalHarmonics']
     for i in range(DeviceCount):
-        for row in range(TotalHarmonics):   
+        for row in range(TotalHarmonics):
             if DevType[i]=='resistor':
                 build_SysEqn_resistor_HB(i, row, SetupDict)
             if DevType[i] == 'oscfilter':
@@ -484,7 +484,7 @@ def build_SysEqns_HB(SetupDict, SimDict, modeldict):
             if DevType[i]=='bipolar':
                 print('Error: Harmonic Balance for Bipolar Transistors not implemented')
                 sys.exit(0)
-                
+
 
 def build_SysEqn_oscfilter_HB(DeviceNr, row, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
@@ -495,7 +495,7 @@ def build_SysEqn_oscfilter_HB(DeviceNr, row, SetupDict):
     Nodes=SetupDict['Nodes']
     STA_matrix=SetupDict['STA_matrix']
     Jacobian_Offset=SetupDict['Jacobian_Offset']
-    if row==Jacobian_Offset+1 or row==Jacobian_Offset-1: 
+    if row==Jacobian_Offset+1 or row==Jacobian_Offset-1:
         OscFilterValue=DevValue[DeviceNr]
     else:
         OscFilterValue=1e18
@@ -505,7 +505,7 @@ def build_SysEqn_oscfilter_HB(DeviceNr, row, SetupDict):
     STA_matrix[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row]=-1
     STA_matrix[Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
 
-            
+
 def build_SysEqn_resistor_HB(DeviceNr, row, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -534,7 +534,7 @@ def build_SysEqn_capacitor_HB(DeviceNr, row, SetupDict, SimDict):
     STA_matrix[Nodes.index(DevNode1[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=1
     STA_matrix[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row]=-1j*omegak[row]*DevValue[DeviceNr]
     STA_matrix[Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
-    
+
 def build_SysEqn_inductor_HB(DeviceNr, row, SetupDict, SimDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -549,7 +549,7 @@ def build_SysEqn_inductor_HB(DeviceNr, row, SetupDict, SimDict):
     STA_matrix[Nodes.index(DevNode1[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=1
     STA_matrix[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row]=-1
     STA_matrix[Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
-    
+
 def build_SysEqn_VSource_HB(DeviceNr, row, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -571,12 +571,12 @@ def build_SysEqn_VSource_HB(DeviceNr, row, SetupDict):
     if DevLabel[DeviceNr] != 'vinp' and DevLabel[DeviceNr] != 'vinn':
         STA_rhs[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=getSourceValue(DevValue[DeviceNr],0)*(row==Jacobian_Offset)
     if(DevLabel[DeviceNr] == 'vinp'):
-        STA_rhs[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=.5*((row==Jacobian_Offset+1)+(row==Jacobian_Offset-1))            
+        STA_rhs[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=.5*((row==Jacobian_Offset+1)+(row==Jacobian_Offset-1))
     if(DevLabel[DeviceNr] == 'vinn'):
         STA_rhs[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-.5*((row==Jacobian_Offset+1)+(row==Jacobian_Offset-1))
     if(DevLabel[DeviceNr] == 'vin'):
         STA_rhs[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-.02*((row==Jacobian_Offset+1)+(row==Jacobian_Offset-1))+0.2*(row==Jacobian_Offset)
-        
+
 def build_SysEqn_ISource_HB(DeviceNr, row, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -596,7 +596,7 @@ def build_SysEqn_ISource_HB(DeviceNr, row, SetupDict):
         STA_matrix[Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
     elif DevNode1[DeviceNr] != '0' :
         STA_matrix[Nodes.index(DevNode1[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=1
-        
+
 def build_SysEqn_MOS_HB(DeviceNr, row, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     TotalHarmonics=SetupDict['TotalHarmonics']
@@ -625,9 +625,9 @@ def build_SysEqn_MOS_HB(DeviceNr, row, SetupDict, SimDict, modeldict):
     TransistorOutputFreq=dft(TransistorOutputTime,NSamples)
     STA_matrix[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
     STA_matrix[Nodes.index(DevNode1[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=1
-    STA_matrix[Nodes.index(DevNode3[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1  
+    STA_matrix[Nodes.index(DevNode3[DeviceNr])*TotalHarmonics+row][(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=-1
     STA_nonlinear[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=TransistorOutputFreq[row]
-    
+
 def update_SysEqn_MOS_HB(DeviceNr, row, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     TotalHarmonics=SetupDict['TotalHarmonics']
@@ -656,7 +656,7 @@ def update_SysEqn_MOS_HB(DeviceNr, row, SetupDict, SimDict, modeldict):
     TransistorOutputFreq=dft(TransistorOutputTime,NSamples)
     STA_nonlinear[(NumberOfNodes+DeviceNr)*TotalHarmonics+row]=TransistorOutputFreq[row]
 
-    
+
 def build_SysEqn_resistor(DeviceNr, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -669,7 +669,7 @@ def build_SysEqn_resistor(DeviceNr, SetupDict):
     STA_matrix[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
     STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=-1
     STA_matrix[Nodes.index(DevNode2[DeviceNr])][NumberOfNodes+DeviceNr]=-1
-    
+
 def build_SysEqn_capacitor(deltaT, DeviceNr, SetupDict, SimDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -721,11 +721,11 @@ def update_SysEqn_capacitor(deltaT, DeviceNr, SetupDict, SimDict):
         STA_rhs[NumberOfNodes+DeviceNr]=DevValue[DeviceNr]/deltaT*(-2*(sol[Nodes.index(DevNode1[DeviceNr])]-sol[Nodes.index(DevNode2[DeviceNr])])+1/2*(solm1[Nodes.index(DevNode1[DeviceNr])]-solm1[Nodes.index(DevNode2[DeviceNr])]) )
     elif method=='be':
         STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=-1.0*DevValue[DeviceNr]/deltaT
-        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=1.0*DevValue[DeviceNr]/deltaT        
+        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=1.0*DevValue[DeviceNr]/deltaT
         STA_rhs[NumberOfNodes+DeviceNr]=-DevValue[DeviceNr]/deltaT*(sol[Nodes.index(DevNode1[DeviceNr])]-sol[Nodes.index(DevNode2[DeviceNr])])
     else:
         print('Warning: unknown integration method',method)
-                  
+
 def build_SysEqn_inductor(deltaT, DeviceNr, SetupDict, SimDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -754,7 +754,7 @@ def build_SysEqn_inductor(deltaT, DeviceNr, SetupDict, SimDict):
         STA_rhs[NumberOfNodes+DeviceNr]=sol[NumberOfNodes+DeviceNr]
     else:
         print('Warning: unknown integration method',method)
-    
+
 
 def update_SysEqn_inductor(deltaT, DeviceNr, SetupDict, SimDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
@@ -770,21 +770,21 @@ def update_SysEqn_inductor(deltaT, DeviceNr, SetupDict, SimDict):
     deltaT=SimDict['deltaT']
     if method=='trap':
         STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=-deltaT/DevValue[DeviceNr]/2
-        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=deltaT/DevValue[DeviceNr]/2       
+        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=deltaT/DevValue[DeviceNr]/2
         STA_rhs[NumberOfNodes+DeviceNr]=sol[NumberOfNodes+DeviceNr]+deltaT*(sol[Nodes.index(DevNode1[DeviceNr])]-sol[Nodes.index(DevNode2[DeviceNr])])/(2*DevValue[DeviceNr])
     elif method=='gear2':
         STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=-2/3*deltaT/DevValue[DeviceNr]
-        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=2/3*deltaT/DevValue[DeviceNr]        
+        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=2/3*deltaT/DevValue[DeviceNr]
         STA_rhs[NumberOfNodes+DeviceNr]=4/3*sol[NumberOfNodes+DeviceNr]-1/3*solm1[NumberOfNodes+DeviceNr]
     elif method=='be':
         STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=-deltaT/DevValue[DeviceNr]
-        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=deltaT/DevValue[DeviceNr]        
+        STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=deltaT/DevValue[DeviceNr]
         STA_rhs[NumberOfNodes+DeviceNr]=sol[NumberOfNodes+DeviceNr]
     else:
         print('Warning: unknown integration method',method)
-    
 
-        
+
+
 def build_SysEqn_VSource(DeviceNr, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -798,7 +798,7 @@ def build_SysEqn_VSource(DeviceNr, SetupDict):
         STA_matrix[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
     if DevNode2[DeviceNr] != '0' :
         STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=-1
-        STA_matrix[Nodes.index(DevNode2[DeviceNr])][NumberOfNodes+DeviceNr]=-1    
+        STA_matrix[Nodes.index(DevNode2[DeviceNr])][NumberOfNodes+DeviceNr]=-1
     STA_matrix[NumberOfNodes+DeviceNr][NumberOfNodes+DeviceNr]=0
     STA_rhs[NumberOfNodes+DeviceNr]=getSourceValue(DevValue[DeviceNr],0)
 
@@ -807,7 +807,7 @@ def update_SysEqn_VSource(DeviceNr, SimTime, SetupDict):
     DevValue=SetupDict['DevValue']
     STA_rhs=SetupDict['STA_rhs']
     STA_rhs[NumberOfNodes+DeviceNr]=getSourceValue(DevValue[DeviceNr],SimTime)
-    
+
 def build_SysEqn_ISource(DeviceNr, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -831,7 +831,7 @@ def build_SysEqn_ISource(DeviceNr, SetupDict):
         STA_matrix[Nodes.index(DevNode2[DeviceNr])][NumberOfNodes+DeviceNr]=-1
     elif DevNode1[DeviceNr] != '0' :
         STA_matrix[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
-        
+
 def update_SysEqn_ISource(DeviceNr, SimTime, SetupDict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -855,7 +855,7 @@ def build_SysEqn_MOS(DeviceNr, SetupDict, SimDict, modeldict):
     STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=0
     STA_matrix[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
     STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=0
-    STA_matrix[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1 
+    STA_matrix[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
     VD=sol[Nodes.index(DevNode1[DeviceNr])]
     VG=sol[Nodes.index(DevNode2[DeviceNr])]
     VS=sol[Nodes.index(DevNode3[DeviceNr])]
@@ -894,8 +894,8 @@ def update_SysEqn_MOS(DeviceNr, SetupDict, SimDict, modeldict):
         STA_nonlinear[NumberOfNodes+DeviceNr]=2*((Vgs-VT)*Vds-0.5*Vds**2)
     else :
         STA_nonlinear[NumberOfNodes+DeviceNr]=(Vgs-VT)**2*(1+lambdaT*Vds)
-        
-        
+
+
 def build_Jacobian_MOS(DeviceNr, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevNode1=SetupDict['DevNode1']
@@ -905,7 +905,7 @@ def build_Jacobian_MOS(DeviceNr, SetupDict, SimDict, modeldict):
     DevValue=SetupDict['DevValue']
     Nodes=SetupDict['Nodes']
     Jacobian=SetupDict['Jacobian']
-    soltemp=SimDict['soltemp']   
+    soltemp=SimDict['soltemp']
     lambdaT=findParameter(modeldict,DevModel[DeviceNr],'lambdaT')
     VT=findParameter(modeldict,DevModel[DeviceNr],'VT')
     Jacobian[NumberOfNodes+DeviceNr][NumberOfNodes+DeviceNr]=DevValue[DeviceNr]
@@ -920,7 +920,7 @@ def build_Jacobian_MOS(DeviceNr, SetupDict, SimDict, modeldict):
         Vgs=-Vgs
         Vds=-Vds
         Vgd=-Vgd
-    else: 
+    else:
         PFET=1
     if Vgs<VT :
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=TINY
@@ -934,13 +934,13 @@ def build_Jacobian_MOS(DeviceNr, SetupDict, SimDict, modeldict):
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=-PFET*2*(Vgs-VT)
         Jacobian[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
         Jacobian[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
-    else :                             
+    else :
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=PFET*lambdaT*(Vgs-VT)**2
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=PFET*2*(Vgs-VT)*(1+lambdaT*Vds)
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=PFET*(-2*(Vgs-VT)*(1+lambdaT*Vds)-lambdaT*(Vgs-VT)**2)
         Jacobian[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
         Jacobian[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
-        
+
 
 def build_SysEqn_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
@@ -958,7 +958,7 @@ def build_SysEqn_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=0
     STA_matrix[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
     STA_matrix[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=0
-    STA_matrix[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1 
+    STA_matrix[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
     VC=soltemp[Nodes.index(DevNode1[DeviceNr])]
     VB=soltemp[Nodes.index(DevNode2[DeviceNr])]
     VE=soltemp[Nodes.index(DevNode3[DeviceNr])]
@@ -967,8 +967,8 @@ def build_SysEqn_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     if Vbe < 0 :
         STA_nonlinear[NumberOfNodes+DeviceNr]=0
     else :
-        STA_nonlinear[NumberOfNodes+DeviceNr]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)      
-        
+        STA_nonlinear[NumberOfNodes+DeviceNr]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)
+
 def build_Jacobian_MOS_HB(DeviceNr, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     TotalHarmonics=SetupDict['TotalHarmonics']
@@ -980,7 +980,7 @@ def build_Jacobian_MOS_HB(DeviceNr, SetupDict, SimDict, modeldict):
     DevModel=SetupDict['DevModel']
     Nodes=SetupDict['Nodes']
     Jacobian=SetupDict['Jacobian']
-    sol=SimDict['sol']   
+    sol=SimDict['sol']
     lambdaT=findParameter(modeldict,DevModel[DeviceNr],'lambdaT')
     VT=findParameter(modeldict,DevModel[DeviceNr],'VT')
     K=findParameter(modeldict,DevModel[DeviceNr],'K')
@@ -1008,8 +1008,8 @@ def build_Jacobian_MOS_HB(DeviceNr, SetupDict, SimDict, modeldict):
                 Jacobian[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode1[DeviceNr])*TotalHarmonics+col]=Jlko[col-row+Jacobian_Offset]
                 Jacobian[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode2[DeviceNr])*TotalHarmonics+col]=Jlkm[col-row+Jacobian_Offset]
                 Jacobian[(NumberOfNodes+DeviceNr)*TotalHarmonics+row][Nodes.index(DevNode3[DeviceNr])*TotalHarmonics+col]=-Jlkm[col-row+Jacobian_Offset]-Jlko[col-row+Jacobian_Offset]
-   
-    
+
+
 def update_SysEqn_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevNode1=SetupDict['DevNode1']
@@ -1028,8 +1028,8 @@ def update_SysEqn_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     if Vbe<0:
         STA_nonlinear[NumberOfNodes+DeviceNr]=0
     else :
-        STA_nonlinear[NumberOfNodes+DeviceNr]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)    
-    
+        STA_nonlinear[NumberOfNodes+DeviceNr]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)
+
 def build_Jacobian_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     NumberOfNodes=SetupDict['NumberOfNodes']
     DevValue=SetupDict['DevValue']
@@ -1041,7 +1041,7 @@ def build_Jacobian_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
     Jacobian=SetupDict['Jacobian']
     soltemp=SimDict['soltemp']
     VEarly=findParameter(modeldict,DevModel[DeviceNr],'Early')
-    Jacobian[NumberOfNodes+DeviceNr][NumberOfNodes+DeviceNr]=DevValue[DeviceNr] 
+    Jacobian[NumberOfNodes+DeviceNr][NumberOfNodes+DeviceNr]=DevValue[DeviceNr]
     VC=soltemp[Nodes.index(DevNode1[DeviceNr])]
     VB=soltemp[Nodes.index(DevNode2[DeviceNr])]
     VE=soltemp[Nodes.index(DevNode3[DeviceNr])]
@@ -1054,13 +1054,13 @@ def build_Jacobian_bipolar(DeviceNr, SetupDict, SimDict, modeldict):
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=-1e-5
         Jacobian[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
         Jacobian[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
-    else :                             
+    else :
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode1[DeviceNr])]=math.exp(Vbe/Vthermal)/VEarly
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode2[DeviceNr])]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)/Vthermal
         Jacobian[NumberOfNodes+DeviceNr][Nodes.index(DevNode3[DeviceNr])]=(-math.exp(Vbe/Vthermal)/VEarly-math.exp(Vbe/Vthermal)*(1+Vce/VEarly)/Vthermal)
         Jacobian[Nodes.index(DevNode1[DeviceNr])][NumberOfNodes+DeviceNr]=1
         Jacobian[Nodes.index(DevNode3[DeviceNr])][NumberOfNodes+DeviceNr]=-1
-    
+
 def DidResidueConverge(SetupDict, SimDict ):
     NumberOfNodes=SetupDict['NumberOfNodes']
     NumberOfCurrents=SetupDict['NumberOfCurrents']
@@ -1079,7 +1079,7 @@ def DidResidueConverge(SetupDict, SimDict ):
             ResidueConverged=False
         node=node+1
     return ResidueConverged
-    
+
 
 def DidUpdateConverge(SetupDict, SimDict ):
     NumberOfNodes=SetupDict['NumberOfNodes']
@@ -1139,21 +1139,21 @@ def DidLTEConverge(SetupDict, SimDict, iteration, LTEIter, NewtonConverged, time
             if PointLocal:
                 for node in range(NumberOfNodes):
                     vkmax=max(abs(soltemp[node]),abs(soltemp[node]-SolutionCorrection[node]))
-                    
+
                     if abs(vpred-soltemp[i])> lteratio*(vkmax*reltol+vabstol):
                         LTEConverged=False
                     else:
                         MaxLTERatio=max(abs(vpred-soltemp[i])/(vkmax*reltol+vabstol),MaxLTERatio)
             elif GlobalTruncation:
                 for node in range(NumberOfNodes):
-                    if abs(vpred-soltemp[i])> lteratio*(vkmax*reltol+vabstol):                       
+                    if abs(vpred-soltemp[i])> lteratio*(vkmax*reltol+vabstol):
                         LTEConverged=False
 
             else:
                 print('Error: Unknown truncation error')
                 sys.exit()
     return LTEConverged, MaxLTERatio
-   
+
 
 def UpdateTimeStep(SetupDict, SimDict, LTEConverged, NewtonConverged, val, iteration, NewtonIter, MaxLTERatio, timeVector, SimTime):
     MatrixSize=SetupDict['MatrixSize']
@@ -1164,7 +1164,7 @@ def UpdateTimeStep(SetupDict, SimDict, LTEConverged, NewtonConverged, val, itera
     solm1=SimDict['solm1']
     solm2=SimDict['solm2']
     deltaT=SimDict['deltaT']
-    ThreeLevelStep=SimDict['ThreeLevelStep']    
+    ThreeLevelStep=SimDict['ThreeLevelStep']
     Converged=NewtonConverged and LTEConverged
     if Converged:
         if not NewtonConverged:
@@ -1177,7 +1177,7 @@ def UpdateTimeStep(SetupDict, SimDict, LTEConverged, NewtonConverged, val, itera
             for j in range(MatrixSize):
                 val[j][iteration]=soltemp[j]
         timeVector[iteration]=SimTime
-        iteration=iteration+1        
+        iteration=iteration+1
         if not FixedTimeStep:
             if ThreeLevelStep:
                 if 0.9<MaxLTERatio<1.0:
@@ -1190,15 +1190,15 @@ def UpdateTimeStep(SetupDict, SimDict, LTEConverged, NewtonConverged, val, itera
             deltaT=min(deltaT,MaxTimeStep)
     else:
         if FixedTimeStep:
-            if iteration>100: 
+            if iteration>100:
                 if not NewtonConverged:
-                    print('Newton failed to converge',NewtonIter)                  
+                    print('Newton failed to converge',NewtonIter)
                 if not LTEConverged:
-                    print('LTE failed to converge',NewtonIter) 
+                    print('LTE failed to converge',NewtonIter)
                 sys.exit()
         else:
             SimTime=max(SimTime-deltaT,0)
-            deltaT=deltaT/1.1    
+            deltaT=deltaT/1.1
     return deltaT, iteration, SimTime, Converged
 
 def dft(Samples,N):

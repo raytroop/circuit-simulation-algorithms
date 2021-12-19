@@ -31,7 +31,7 @@ Optdict['MaxNewtonIterations']=int(5)
 #
 DeviceCount=ana.readnetlist('netlist_5p5.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-# 
+#
 NumberOfNodes=len(Nodes)
 MatrixSize=DeviceCount+len(Nodes)
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -97,7 +97,7 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         VD=sol[Nodes.index(DevNode1[i])]
         VG=sol[Nodes.index(DevNode2[i])]
         VS=sol[Nodes.index(DevNode3[i])]
@@ -111,9 +111,9 @@ for i in range(DeviceCount):
         else :
             STA_nonlinear[NumberOfNodes+i]=(Vgs-VT)**2*(1+lambdaT*Vds)
 #
-f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear    
+f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 NSourceSteps=100
 NewIter=int(Optdict['MaxNewtonIterations'])
 val=[[0 for i in range(NSourceSteps+1)] for j in range(MatrixSize)]
@@ -183,26 +183,26 @@ for step in range(NSourceSteps):
                     Vgs=-Vgs
                     Vds=-Vds
                     Vgd=-Vgd
-                else: 
+                else:
                     PFET=1
                 if Vgs<VT :
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*1e-10
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*1e-10
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-PFET*1e-10
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                  
+                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
                 elif Vds <= Vgs-VT:
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*2*(Vgd-VT)
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*2*Vds
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-PFET*2*(Vgs-VT)
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
                     Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
-                else :                             
+                else :
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*lambdaT*(Vgs-VT)**2
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*2*(Vgs-VT)*(1+lambdaT*Vds)
                     Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=PFET*(-2*(Vgs-VT)*(1+lambdaT*Vds)-lambdaT*(Vgs-VT)**2)
                     Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+                    Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         sol=sol-np.matmul(np.linalg.inv(Jacobian),f)
     for j in range(MatrixSize):
         val[j][step+1]=sol[j]
@@ -210,45 +210,45 @@ for step in range(NSourceSteps):
 ana.plotdata(Plotdict,NumberOfNodes,Iteration,val,Nodes)
 ana.printdata(Printdict,NumberOfNodes,Iteration,val,Nodes)
 
-        
 
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

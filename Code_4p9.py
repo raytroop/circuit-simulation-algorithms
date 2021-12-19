@@ -74,7 +74,7 @@ for i in range(DeviceCount):
         if DevNode1[i] == '0':
             STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(-sol[Nodes.index(DevNode2[i])])+1/2*(-solm1[Nodes.index(DevNode2[i])] ))
         if DevNode2[i] == '0':
-            STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(sol[Nodes.index(DevNode1[i])])+1/2*(solm1[Nodes.index(DevNode1[i])] ))    
+            STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(sol[Nodes.index(DevNode1[i])])+1/2*(solm1[Nodes.index(DevNode1[i])] ))
     if DevType[i]=='inductor':
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=1
         if DevNode1[i] != '0' : STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=-2/3*deltaT/DevValue[i]
@@ -86,11 +86,11 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=0
         STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
 #
-#        
+#
 val=[[0 for i in range(NIterations)] for j in range(MatrixSize)]
 timeVector=[0 for i in range(NIterations)]
 for iter in range(NIterations):
-    SimTime=iter*deltaT       
+    SimTime=iter*deltaT
     STA_inv=np.linalg.inv(STA_matrix)
     solm1=sol[:]
     sol=np.matmul(STA_inv,STA_rhs)
@@ -104,7 +104,7 @@ for iter in range(NIterations):
             if DevNode1[i] == '0':
                 STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(-sol[Nodes.index(DevNode2[i])])+1/2*(-solm1[Nodes.index(DevNode2[i])] ))
             if DevNode2[i] == '0':
-                STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(sol[Nodes.index(DevNode1[i])])+1/2*(solm1[Nodes.index(DevNode1[i])] )) 
+                STA_rhs[NumberOfNodes+i]=DevValue[i]/deltaT*(-2*(sol[Nodes.index(DevNode1[i])])+1/2*(solm1[Nodes.index(DevNode1[i])] ))
         if DevType[i]=='inductor':
             STA_rhs[NumberOfNodes+i]=4/3*sol[NumberOfNodes+i]-1/3*solm1[NumberOfNodes+i]
         if DevType[i]=='VoltSource':

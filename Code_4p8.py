@@ -33,7 +33,7 @@ Optionsdict['NIterations']=200
 #
 DeviceCount=ana.readnetlist('netlist_4p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
+#
 MatrixSize=DeviceCount+len(Nodes)
 STA_matrix=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
 STA_rhs=[0 for i in range(MatrixSize)]
@@ -90,11 +90,11 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=0
         STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
 #
-#        
+#
 val=[[0 for i in range(NIterations)] for j in range(MatrixSize)]
 timeVector=[0 for i in range(NIterations)]
 for iter in range(NIterations):
-    SimTime=iter*deltaT       
+    SimTime=iter*deltaT
     STA_inv=np.linalg.inv(STA_matrix)
     sol=np.matmul(STA_inv,STA_rhs)
     timeVector[iter]=SimTime
@@ -107,14 +107,14 @@ for iter in range(NIterations):
             if DevNode1[i] == '0':
                 STA_rhs[NumberOfNodes+i]=-2*DevValue[i]/deltaT*(-sol[Nodes.index(DevNode2[i])])-sol[NumberOfNodes+i]
             if DevNode2[i] == '0':
-                STA_rhs[NumberOfNodes+i]=-2*DevValue[i]/deltaT*(sol[Nodes.index(DevNode1[i])])-sol[NumberOfNodes+i]            
+                STA_rhs[NumberOfNodes+i]=-2*DevValue[i]/deltaT*(sol[Nodes.index(DevNode1[i])])-sol[NumberOfNodes+i]
         if DevType[i]=='inductor':
             if DevNode1[i] != '0' and DevNode2[i] != '0':
                 STA_rhs[NumberOfNodes+i]=sol[NumberOfNodes+i]+deltaT*(sol[Nodes.index(DevNode1[i])]-sol[Nodes.index(DevNode2[i])])/(2*DevValue[i])
             if DevNode1[i] == '0':
                 STA_rhs[NumberOfNodes+i]=sol[NumberOfNodes+i]+deltaT*(-sol[Nodes.index(DevNode2[i])])/(2*DevValue[i])
             if DevNode2[i] == '0':
-                STA_rhs[NumberOfNodes+i]=sol[NumberOfNodes+i]+deltaT*(sol[Nodes.index(DevNode1[i])])/(2*DevValue[i])            
+                STA_rhs[NumberOfNodes+i]=sol[NumberOfNodes+i]+deltaT*(sol[Nodes.index(DevNode1[i])])/(2*DevValue[i])
         if DevType[i]=='VoltSource':
             STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],SimTime)
-ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)    
+ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)

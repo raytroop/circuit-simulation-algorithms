@@ -1,8 +1,8 @@
 *
 vdd vdd 0 1
 vss vss 0 0
-mn1 out in vss nch 
-mp1 out in vdd pch 
+mn1 out in vss nch
+mp1 out in vdd pch
 mn2 in out vss nch
 mp2 in out vdd pch
 r1 in vss 10000000

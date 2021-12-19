@@ -32,7 +32,7 @@ Optdict['MaxNewtonIterations']=int(5)
 #
 DeviceCount=ana.readnetlist('netlist_5p4.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-# 
+#
 NumberOfNodes=len(Nodes)
 MatrixSize=DeviceCount+len(Nodes)
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -96,7 +96,7 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         VD=sol[Nodes.index(DevNode1[i])]
         VG=sol[Nodes.index(DevNode2[i])]
         VS=sol[Nodes.index(DevNode3[i])]
@@ -115,7 +115,7 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+        STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
         VC=sol[Nodes.index(DevNode1[i])]
         VB=sol[Nodes.index(DevNode2[i])]
         VE=sol[Nodes.index(DevNode3[i])]
@@ -124,12 +124,12 @@ for i in range(DeviceCount):
         if Vbe < 0 :
             STA_nonlinear[NumberOfNodes+i]=0
         else :
-            STA_nonlinear[NumberOfNodes+i]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)  
+            STA_nonlinear[NumberOfNodes+i]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)
 
 #
-f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear    
+f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 NewIter=int(Optdict['MaxNewtonIterations'])
 val=[[0 for i in range(NewIter+1)] for j in range(MatrixSize)]
 for j in range(MatrixSize):
@@ -154,7 +154,7 @@ for Newtoniter in range(NewIter):
             STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
             STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
             STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1 
+            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
             VD=sol[Nodes.index(DevNode1[i])]
             VG=sol[Nodes.index(DevNode2[i])]
             VS=sol[Nodes.index(DevNode3[i])]
@@ -166,14 +166,14 @@ for Newtoniter in range(NewIter):
             if Vds < Vgs-VT :
                 STA_nonlinear[NumberOfNodes+i]=2*((Vgs-VT)*Vds-0.5*Vds**2)
             else :
-                STA_nonlinear[NumberOfNodes+i]=(Vgs-VT)**2*(1+lambdaT*Vds)                
+                STA_nonlinear[NumberOfNodes+i]=(Vgs-VT)**2*(1+lambdaT*Vds)
         elif DevType[i]=='bipolar':
             VEarly=ana.findParameter(modeldict,DevModel[i],'Early')
             STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=DevValue[i]
             STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=0
             STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
             STA_matrix[NumberOfNodes+i][Nodes.index(DevNode3[i])]=0
-            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                 
+            STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
             VC=sol[Nodes.index(DevNode1[i])]
             VB=sol[Nodes.index(DevNode2[i])]
             VE=sol[Nodes.index(DevNode3[i])]
@@ -205,21 +205,21 @@ for Newtoniter in range(NewIter):
                 Vgs=-Vgs
                 Vds=-Vds
                 Vgd=-Vgd
-            else: 
+            else:
                 PFET=1
             if Vgs<VT :
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*1e-1
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*1e-1
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-PFET*1e-1
                 Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1            
+                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
             elif Vds <= Vgs-VT:
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*2*(Vgd-VT)
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*2*Vds
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-PFET*2*(Vgs-VT)
                 Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
                 Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
-            else :                     
+            else :
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=PFET*lambdaT*(Vgs-VT)**2
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=PFET*2*(Vgs-VT)*(1+lambdaT*Vds)
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=PFET*(-2*(Vgs-VT)*(1+lambdaT*Vds)-lambdaT*(Vgs-VT)**2)
@@ -239,13 +239,13 @@ for Newtoniter in range(NewIter):
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=1e-5
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=-1e-5
                 Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                              
-            else :             
+                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
+            else :
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode1[i])]=math.exp(Vbe/Vthermal)/VEarly
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode2[i])]=math.exp(Vbe/Vthermal)*(1+Vce/VEarly)/Vthermal
                 Jacobian[NumberOfNodes+i][Nodes.index(DevNode3[i])]=(-math.exp(Vbe/Vthermal)/VEarly-math.exp(Vbe/Vthermal)*(1+Vce/VEarly)/Vthermal)
                 Jacobian[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
-                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1                    
+                Jacobian[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
     sol=sol-np.matmul(np.linalg.inv(Jacobian),f)
     Jac_inv=np.linalg.inv(Jacobian)
     for j in range(MatrixSize):
@@ -253,43 +253,43 @@ for Newtoniter in range(NewIter):
 ana.plotdata(Plotdict,NumberOfNodes,Iteration,val,Nodes)
 ana.printdata(Printdict,NumberOfNodes,Iteration,val,Nodes)
 
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -43,7 +43,7 @@ NHarmonics=Optionsdict['NHarmonics']
 Period=Optionsdict['Period']
 run_PAC=(Optionsdict['PAC']=='True')
 NSamples=2*(NHarmonics-1)
-TotalHarmonics=2*NHarmonics-1    
+TotalHarmonics=2*NHarmonics-1
 NumberOfNodes=len(Nodes)
 MatrixSize=(DeviceCount+len(Nodes))*TotalHarmonics
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -113,9 +113,9 @@ for i in range(TotalHarmonics):
 
 ana.build_SysEqns_HB(SetupDict, SimDict, modeldict)
 
-f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear        
+f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 TimePnts=[i*Period/NSamples for i in range(NSamples)]
 NewIter=int(Optionsdict['MaxNewtonIterations'])
 Newtoniter=0
@@ -127,7 +127,7 @@ while Newtoniter < NewIter and abs(max(f)) > iabstol:
         STA_nonlinear[i]=0
     ana.update_SysEqns_HB(SetupDict, SimDict, modeldict)
     f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
-    
+
 #
 #
     for i in range(MatrixSize):
@@ -147,14 +147,14 @@ plt.plot(TimePnts,VnTime)
 
 if run_PAC:
     STA_rhs=[0 for i in range(MatrixSize)]
-    val=[[0 for i in range(100)] for j in range(4)]        
+    val=[[0 for i in range(100)] for j in range(4)]
     for iter in range(100):
         omega=iter*1e6*2*3.14159265
         print('Frequency sweep:',iter*1e6)
         for i in range(DeviceCount):
             for row in range(TotalHarmonics):
                 if DevType[i]=='capacitor':
-                    if DevNode1[i] != '0' : 
+                    if DevNode1[i] != '0' :
                         Jacobian[(NumberOfNodes+i)*TotalHarmonics+row][Nodes.index(DevNode1[i])*TotalHarmonics+row]=1j*(omegak[row]+(np.sign(omegak[row])+(omegak[row]==0))*omega)*DevValue[i]
                     if DevNode2[i] != '0' :
                         Jacobian[(NumberOfNodes+i)*TotalHarmonics+row][Nodes.index(DevNode2[i])*TotalHarmonics+row]=-1j*(omegak[row]+(np.sign(omegak[row])+(omegak[row]==0))*omega)*DevValue[i]
@@ -170,34 +170,34 @@ if run_PAC:
         val[1][iter]=20*math.log10(abs(sol[6*TotalHarmonics+Jacobian_Offset+1]))
         val[2][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+3])
-    plt.plot(val[1])        
+    plt.plot(val[1])
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

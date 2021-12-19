@@ -21,7 +21,7 @@ DevNode3=[0*i for i in range(MaxNumberOfDevices)]
 DevModel=[0*i for i in range(MaxNumberOfDevices)]
 DevValue=[0*i for i in range(MaxNumberOfDevices)]
 Nodes=[]
-vkmax=0 
+vkmax=0
 #
 #
 modeldict=ana.readmodelfile('models.txt')
@@ -46,7 +46,7 @@ Optdict['CheckLTE']='True'
 #
 DeviceCount=ana.readnetlist('netlist_5p13.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
+#
 reltol=Optdict['reltol']
 iabstol=Optdict['iabstol']
 vabstol=Optdict['vabstol']
@@ -62,7 +62,7 @@ PointLocal=not GlobalTruncation
 method=Optdict['method']
 CheckLTE=(Optdict['CheckLTE']=='True')
 #
-#    
+#
 NumberOfNodes=len(Nodes)
 NumberOfCurrents=DeviceCount
 MatrixSize=DeviceCount+len(Nodes)
@@ -126,11 +126,11 @@ if len(ICdict)>0:
                 print('Setting ',Nodes[j],' to ',sol[j])
 #
 #
-ana.build_SysEqns(SetupDict, SimDict, modeldict)         
+ana.build_SysEqns(SetupDict, SimDict, modeldict)
 #
-f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear        
+f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 val=[[0 for i in range(MaxSimulationIterations)] for j in range(MatrixSize)]
 vin=[0 for i in range(MaxSimulationIterations)]
 timeVector=[0 for i in range(MaxSimulationIterations)]
@@ -144,7 +144,7 @@ Converged=False
 for i in range(MatrixSize):
     soltemp[i]=sol[i]
 #
-#   
+#
 while SimTime<MaxSimTime and iteration<MaxSimulationIterations:
     if iteration%100==0:
         print("Iter=",iteration,NewtonIter,LTEIter,deltaT,vkmax,SimTime)
@@ -180,7 +180,7 @@ while SimTime<MaxSimTime and iteration<MaxSimulationIterations:
         NewtonIter=0
         for i in range(MatrixSize):
             soltemp[i]=sol[i]
-# 
+#
     deltaT, iteration, SimTime, Converged=ana.UpdateTimeStep(SetupDict, SimDict, LTEConverged, NewtonConverged, val, iteration, NewtonIter, MaxLTERatio, timeVector, SimTime)
     TotalIterations=TotalIterations+NewtonIter
 
@@ -194,7 +194,7 @@ while SimTime<MaxSimTime and iteration<MaxSimulationIterations:
     if deltaT<1e-15:
         print('Warning: Timestep too short: ',deltaT)
         sys.exit(0)
-            
+
 reval=[[0 for i in range(iteration)] for j in range(MatrixSize)]
 retime=[0 for i in range(iteration)]
 logvalue=[0 for i in range(iteration)]
@@ -202,8 +202,8 @@ for i in range(iteration):
     for j in range(MatrixSize):
         reval[j][i]=val[j][i]
     retime[i]=timeVector[i]
-    
+
 ana.plotdata(Plotdict,NumberOfNodes,retime,reval,Nodes)
 if len(Printdict)> 0:
     ana.printdata(Printdict,NumberOfNodes,retime,reval,Nodes)
-print('TotalIterations ',TotalIterations)    
+print('TotalIterations ',TotalIterations)

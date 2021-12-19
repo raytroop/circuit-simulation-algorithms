@@ -116,4 +116,4 @@ plt.plot(freqpnts,TotalNoiseSpectrum)
 plt.title('Noise Power vs frequency')
 plt.xlabel('frequency [Hz]')
 plt.ylabel('Noise Power [V^2/Hz]')
-plt.show
+plt.show()

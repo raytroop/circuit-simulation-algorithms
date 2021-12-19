@@ -42,7 +42,7 @@ Optionsdict['Period']=1e-9
 #
 DeviceCount=ana.readnetlist('netlist_5p14.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
+#
 MatrixSize=DeviceCount+len(Nodes)
 NumberOfNodes=len(Nodes)
 NumberOfCurrents=DeviceCount
@@ -113,10 +113,10 @@ SimDict['soltemp']=soltemp
 SimDict['f']=f
 #
 #
-ana.build_SysEqns(SetupDict, SimDict, modeldict)     
-f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear        
+ana.build_SysEqns(SetupDict, SimDict, modeldict)
+f=np.matmul(STA_matrix,sol)-STA_rhs+STA_nonlinear
 #
-#        
+#
 Npnts=int(Period/deltaT)
 val=[[0 for i in range(Npnts)] for j in range(MatrixSize)]
 vin=[0 for i in range(20)]
@@ -139,11 +139,11 @@ for ShootingIter in range(10):
     #
         while not NewtonConverged and NewtonIter<50:
             NewtonIter=NewtonIter+1
-    
+
             for i in range(MatrixSize):
                 STA_nonlinear[i]=0
             ana.update_SysEqns(SimTime, SetupDict, SimDict, modeldict)
-            SimDict['f']=f=np.matmul(STA_matrix,soltemp)-STA_rhs+STA_nonlinear 
+            SimDict['f']=f=np.matmul(STA_matrix,soltemp)-STA_rhs+STA_nonlinear
 
             ResidueConverged=ana.DidResidueConverge(SetupDict, SimDict)
     #
@@ -152,15 +152,15 @@ for ShootingIter in range(10):
                 for j in range(MatrixSize):
                     Jacobian[i][j]=STA_matrix[i][j]
             SetupDict['Jacobian']=Jacobian
-            ana.build_Jacobian(SetupDict, SimDict, modeldict)      
-            UpdateConverged=ana.DidUpdateConverge(SetupDict, SimDict)                        
+            ana.build_Jacobian(SetupDict, SimDict, modeldict)
+            UpdateConverged=ana.DidUpdateConverge(SetupDict, SimDict)
             Jacobian=SetupDict['Jacobian']
             SolutionCorrection=np.matmul(np.linalg.inv(Jacobian),f)
             for i in range(MatrixSize):
                 soltemp[i]=soltemp[i]-SolutionCorrection[i]
-                
+
             NewtonConverged=ResidueConverged and UpdateConverged
-        if NewtonConverged:    
+        if NewtonConverged:
             for i in range(MatrixSize):
                 solm1[i]=sol[i]
             for node in range(NumberOfNodes):
@@ -186,7 +186,7 @@ for ShootingIter in range(10):
     #
     #
     maxSol[ShootingIter]=max(abs(sol-solInit))
-    # 
+    #
     #
     solInit=solInit+np.matmul(np.linalg.inv(IdentityMatrix-FrachetMatrix),(sol-solInit))
 ana.plotdata(Plotdict,NumberOfNodes,timepnts,val,Nodes)

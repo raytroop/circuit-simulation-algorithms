@@ -42,7 +42,7 @@ NHarmonics=int(Optionsdict['NHarmonics'])
 Period=Optionsdict['Period']
 run_PNOISE=(Optionsdict['PNOISE']=='True')
 NSamples=2*(NHarmonics-1)
-TotalHarmonics=2*NHarmonics-1    
+TotalHarmonics=2*NHarmonics-1
 NumberOfNodes=len(Nodes)
 MatrixSize=(DeviceCount+len(Nodes))*TotalHarmonics
 Jacobian=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -116,7 +116,7 @@ for i in range(DeviceCount):
     if(DevLabel[i] == 'vinp'):
         StimulusIndex=i
 ana.build_SysEqns_HB(SetupDict, SimDict, modeldict)
-#        
+#
 #
 for AmpIndex in range(1):
     STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1]=.23577+float (AmpIndex)/100000
@@ -154,28 +154,28 @@ for AmpIndex in range(1):
     IOscFilter=ana.idft(IOscFilterSpec,TotalHarmonics)
     print('rms ',np.real(np.sqrt(np.mean(IOscFilter**2))),STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1])
 
-if run_PNOISE:    
+if run_PNOISE:
     #
     #
     Jacobian=SetupDict['Jacobian']
     Jacobian[(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset-1][(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset-1]=-1e18
-    Jacobian[(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset+1][(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset+1]=-1e18        
+    Jacobian[(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset+1][(NumberOfNodes+OscFilterIndex)*TotalHarmonics+Jacobian_Offset+1]=-1e18
     #
     #
     STA_rhs=[0 for i in range(MatrixSize)]
-    val=[[0 for i in range(100)] for j in range(4)]        
+    val=[[0 for i in range(100)] for j in range(4)]
     for iter in range(100):
         omega=(iter)*1e6*2*math.pi
         for i in range(DeviceCount):
             for row in range(TotalHarmonics):
                 if DevType[i]=='capacitor':
-                    if DevNode1[i] != '0' : 
+                    if DevNode1[i] != '0' :
                         Jacobian[(NumberOfNodes+i)*TotalHarmonics+row][Nodes.index(DevNode1[i])*TotalHarmonics+row]=1j*(omegak[row]+(np.sign(omegak[row])+(omegak[row]==0))*omega)*DevValue[i]
                     if DevNode2[i] != '0' :
                         Jacobian[(NumberOfNodes+i)*TotalHarmonics+row][Nodes.index(DevNode2[i])*TotalHarmonics+row]=-1j*(omegak[row]+(np.sign(omegak[row])+(omegak[row]==0))*omega)*DevValue[i]
                 if DevType[i]=='inductor':
                     Jacobian[(NumberOfNodes+i)*TotalHarmonics+row][(NumberOfNodes+i)*TotalHarmonics+row]=-1j*(omegak[row]+(np.sign(omegak[row])+(omegak[row]==0))*omega)*DevValue[i]
-                if DevType[i]=='CurrentSource': 
+                if DevType[i]=='CurrentSource':
                     STA_rhs[(NumberOfNodes+i)*TotalHarmonics+row]=.5*(row==Jacobian_Offset+1)+.5*(row==Jacobian_Offset-1)
         sol=np.matmul(np.linalg.inv(Jacobian),STA_rhs)
         val[0][iter]=abs(sol[3*TotalHarmonics+Jacobian_Offset])

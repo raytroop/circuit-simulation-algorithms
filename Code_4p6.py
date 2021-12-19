@@ -30,10 +30,10 @@ Optionsdict={}
 Optionsdict['deltaT']=1e-12
 Optionsdict['NIterations']=200
 #
-#
+# Encounter "invalid value encountered in np.matmul" when deltaT=100ps
 DeviceCount=ana.readnetlist('netlist_4p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
+#
 MatrixSize=DeviceCount+len(Nodes)
 STA_matrix=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
 STA_rhs=[0 for i in range(MatrixSize)]
@@ -72,11 +72,11 @@ for i in range(DeviceCount):
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=0
         STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],0)
 #
-#        
+#
 val=[[0 for i in range(NIterations)] for j in range(MatrixSize)]
 timeVector=[0 for i in range(NIterations)]
 for iter in range(NIterations):
-    SimTime=iter*deltaT       
+    SimTime=iter*deltaT
     STA_inv=np.linalg.inv(STA_matrix)
     sol=np.matmul(STA_inv,STA_rhs)
     timeVector[iter]=SimTime
@@ -90,4 +90,4 @@ for iter in range(NIterations):
         if DevType[i]=='VoltSource':
             STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],SimTime)
 
-ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)    
+ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)

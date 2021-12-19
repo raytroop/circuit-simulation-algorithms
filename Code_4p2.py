@@ -33,8 +33,8 @@ SimDict={}
 #
 DeviceCount=ana.readnetlist('netlist_4p2.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
-#    
-MatrixSize=DeviceCount+len(Nodes) 
+#
+MatrixSize=DeviceCount+len(Nodes)
 #
 #
 STA_matrix=[[0 for i in range(MatrixSize)] for j in range(MatrixSize)]
@@ -48,7 +48,7 @@ for i in range(DeviceCount):
     if DevType[i]=='capacitor' or DevType[i]=='inductor':
         DevValue[i]*=(0+1j)
     if DevType[i] == 'resistor' or DevType[i] == 'inductor':
-        STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=-DevValue[i]        
+        STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=-DevValue[i]
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=1
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=-1
@@ -74,7 +74,7 @@ for i in range(DeviceCount):
         if DevNode2[i] != '0' :
             STA_matrix[Nodes.index(DevNode2[i])][NumberOfNodes+i]=-1
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=1
-        STA_rhs[NumberOfNodes+i]=0 
+        STA_rhs[NumberOfNodes+i]=0
     if DevType[i]=='transistor':
         STA_matrix[NumberOfNodes+i][NumberOfNodes+i]=1
         STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=1/DevValue[i]
@@ -82,14 +82,14 @@ for i in range(DeviceCount):
         STA_matrix[Nodes.index(DevNode1[i])][NumberOfNodes+i]=1
         STA_matrix[Nodes.index(DevNode3[i])][NumberOfNodes+i]=-1
 #
-#           
+#
 val=[[0 for i in range(100)] for j in range(MatrixSize)]
 freqpnts=[0 for i in range(100)]
 for iter in range(100):
     omega=iter*1e8*2*3.14159265
     for i in range(DeviceCount):
         if DevType[i]=='capacitor':
-            if DevNode1[i] != '0' : 
+            if DevNode1[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode1[i])]=DevValue[i]*omega
             if DevNode2[i] != '0' :
                 STA_matrix[NumberOfNodes+i][Nodes.index(DevNode2[i])]=-DevValue[i]*omega
@@ -100,11 +100,11 @@ for iter in range(100):
     freqpnts[iter]=iter*1e8
     for j in range(MatrixSize):
         val[j][iter]=abs(sol[j])
-        
+
 ana.plotdata(Plotdict,NumberOfNodes,freqpnts,val,Nodes)
 if len(Printdict)> 0:
-    ana.printdata(Printdict,NumberOfNodes,freqpnts,val,Nodes)        
+    ana.printdata(Printdict,NumberOfNodes,freqpnts,val,Nodes)
 plt.title('Voltage vs frequency')
 plt.xlabel('frequency [Hz]')
-plt.ylabel('|Voltage| [V]')  
+plt.ylabel('|Voltage| [V]')
 plt.show
