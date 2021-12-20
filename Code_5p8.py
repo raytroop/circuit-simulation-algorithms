@@ -153,10 +153,16 @@ if run_PAC:
 else:
     _, axs = plt.subplots(nrows=1)
 
-axs[0].plot(TimePnts,VnTime)
-axs[0].set_title('Voltage vs time')
-axs[0].set_xlabel('time [s]')
-axs[0].set_ylabel('Voltage [V]')
+try:
+    axs[0].plot(TimePnts,VnTime)
+    axs[0].set_title('Voltage vs time')
+    axs[0].set_xlabel('time [s]')
+    axs[0].set_ylabel('Voltage [V]')
+except:
+    axs.plot(TimePnts,VnTime)
+    axs.set_title('Voltage vs time')
+    axs.set_xlabel('time [s]')
+    axs.set_ylabel('Voltage [V]')
 
 if run_PAC:
     STA_rhs=[0 for i in range(MatrixSize)]
