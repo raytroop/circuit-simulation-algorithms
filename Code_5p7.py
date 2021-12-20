@@ -8,6 +8,7 @@ Created on Thu Feb 28 22:33:04 2019
 import numpy as np
 import sys
 import analogdef as ana
+import matplotlib.pyplot as plt
 
 '''
 Code5.7 is an implementation of the shooting method concept with capacitors as the dynamic element.
@@ -193,6 +194,11 @@ for ShootingIter in range(10):
     #
     solInit=solInit+np.matmul(np.linalg.inv(IdentityMatrix-FrachetMatrix),(sol-solInit))
 ana.plotdata(Plotdict,NumberOfNodes,timepnts,val,Nodes)
+plt.figure(2)
+plt.plot(maxSol)
+plt.xlabel('Iteration')
+plt.ylabel('Max Difference IC')
+plt.show()
 #
 if len(Printdict)> 0:
     ana.printdata(Printdict,NumberOfNodes,timepnts,val,Nodes)
