@@ -40,7 +40,8 @@ Optionsdict['PAC']='False'
 Optionsdict['MaxNewtonIterations']=15
 Optionsdict['iabstol']=1e-7
 #
-DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+DeviceCount=ana.readnetlist('netlist_5p15.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #
 NHarmonics=Optionsdict['NHarmonics']
@@ -156,9 +157,9 @@ else:
 
 try:
     axs[0].plot(TimePnts,VnTime)
-    axs[0].set_title('Voltage vs time')
+    axs[0].set_title('outp Voltage vs time')
     axs[0].set_xlabel('time [s]')
-    axs[0].set_ylabel('Voltage [V]')
+    axs[0].set_ylabel('outp Voltage [V]')
 except:
     axs.plot(TimePnts,VnTime)
     axs.set_title('Voltage vs time')
@@ -191,7 +192,7 @@ if run_PAC:
         val[2][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+3])
     axs[1].plot([20*math.log10(x) for x in val[1]])
-    axs[1].set_title('PAC')
+    axs[1].set_title('1st harmonic PAC')
     axs[1].set_xlabel('frequency [MHz]')
     axs[1].set_ylabel('[dB]')
 
