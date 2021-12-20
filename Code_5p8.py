@@ -145,6 +145,7 @@ while Newtoniter < NewIter and abs(max(f)) > iabstol:
     Newtoniter=Newtoniter+1
 
 for j in range(TotalHarmonics):
+    # always save node 'outp' as Vntime
     Vn[j]=sol[Nodes.index('outp')*TotalHarmonics+j]
 VnTime=ana.idft(Vn,TotalHarmonics)
 
