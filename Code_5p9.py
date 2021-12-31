@@ -11,6 +11,10 @@ import matplotlib.pyplot as plt
 import math
 import analogdef as ana
 
+'''
+ PNOISE implementation
+'''
+
 ##
 MaxNumberOfDevices=100
 DevType=[0*i for i in range(MaxNumberOfDevices)]
