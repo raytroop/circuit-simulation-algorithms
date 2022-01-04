@@ -11,7 +11,7 @@ import analogdef as ana
 import matplotlib.pyplot as plt
 
 '''
-Code5.7 is an implementation of the shooting method concept with capacitors as the dynamic element.
+ shooting method, supporting capacitors as the dynamic element (inductor NOT supported).
 '''
 #
 #
