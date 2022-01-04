@@ -118,6 +118,9 @@ def readnetlist(netlist,modeldict,ICdict,Plotdict,Writedict,Optiondict,DevType,D
                             sys.exit()
                 else:
                     print('Warning: Odd characters in .options statement \'',ConditionSplit,'\'')
+            # overrdie "float"
+            if 'NHarmonics' in Optiondict:
+                Optiondict['NHarmonics'] = int(Optiondict['NHarmonics'])
         if DevType[DeviceCount]!='empty':
             if DevType[DeviceCount] != 'transistor' and DevType[DeviceCount] != 'bipolar':
                 try:
