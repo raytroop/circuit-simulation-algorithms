@@ -6,8 +6,11 @@ Created on Thu Feb 28 22:33:04 2019
 @author: mikael
 """
 import numpy as np
+from numpy import linalg
 from scipy.fftpack import fft, ifft
 import matplotlib.pyplot as plt
+from matplotlib import collections as mc
+from matplotlib import colors as mcolors
 import math
 import analogdef as ana
 
@@ -40,9 +43,9 @@ Optionsdict['PAC']='False'
 Optionsdict['MaxNewtonIterations']=15
 Optionsdict['iabstol']=1e-7
 #
-DeviceCount=ana.readnetlist('netlist_5p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 # DeviceCount=ana.readnetlist('netlist_5p15.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
-# DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #
 NHarmonics=Optionsdict['NHarmonics']
@@ -169,8 +172,11 @@ except:
 
 if run_PAC:
     STA_rhs=[0 for i in range(MatrixSize)]
-    val=[[0 for i in range(100)] for j in range(4)]
-    for iter in range(100):
+    NUM_FREQ_STEP = 100
+    NUM_HARMONIC_PAC = 4
+    val=[[0 for i in range(NUM_FREQ_STEP)] for j in range(NUM_HARMONIC_PAC)]
+    freqx=[[0 for i in range(NUM_FREQ_STEP)] for j in range(NUM_HARMONIC_PAC)]
+    for iter in range(NUM_FREQ_STEP):
         omega=iter*1e6*2*math.pi
         print('Frequency sweep(Hz):',iter*1e6)
         for i in range(DeviceCount):
@@ -192,9 +198,19 @@ if run_PAC:
         val[1][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+1])
         val[2][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=abs(sol[6*TotalHarmonics+Jacobian_Offset+3])
-    axs[1].plot([20*math.log10(x) for x in val[1]])
-    axs[1].set_title('1st harmonic PAC')
-    axs[1].set_xlabel('frequency [MHz]')
-    axs[1].set_ylabel('[dB]')
+
+        freqx[0][iter] = (0/Period + iter*1e6)
+        freqx[1][iter] = (1/Period + iter*1e6)
+        freqx[2][iter] = (2/Period + iter*1e6)
+        freqx[3][iter] = (3/Period + iter*1e6)
+
+    lines = [list(zip(freqx[i], val[i])) for i in range(4)]
+    colors = [mcolors.to_rgba(c) for c in plt.rcParams['axes.prop_cycle'].by_key()['color']]
+    lc = mc.LineCollection(lines, linewidths=2, colors=colors)
+    axs[1].add_collection(lc)
+    axs[1].autoscale()
+    axs[1].set_title('PAC simulation')
+    axs[1].set_xlabel('frequency [Hz]')
+    axs[1].set_ylabel('TransConductance [S] vs Harmonic')
 
 plt.show()
