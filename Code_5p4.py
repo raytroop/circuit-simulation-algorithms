@@ -8,6 +8,9 @@ Created on Thu Feb 28 22:33:04 2019
 import numpy as np
 import analogdef as ana
 
+"""
+Homotopy Methods - Source Stepping
+"""
 #
 #
 DeviceCount=0
@@ -28,7 +31,7 @@ Printdict={}
 Optdict={}
 Optdict['MaxNewtonIterations']=int(5)
 #
-#
+# Fig.5.10
 DeviceCount=ana.readnetlist('netlist_5p5.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #

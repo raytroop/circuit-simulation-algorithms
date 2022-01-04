@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 import math
 import analogdef as ana
 
+"""
+Homotopy Methods - gmin Stepping
+"""
 #
 #
 def f_NL(STA_matrix, STA_rhs, STA_nonlinear, solution):
@@ -35,6 +38,7 @@ Printdict={}
 Optdict={}
 #
 #
+# Fig.5.13 -> Fig.5.14
 DeviceCount=ana.readnetlist('netlist_5p6.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #

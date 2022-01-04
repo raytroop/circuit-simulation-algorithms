@@ -9,6 +9,9 @@ import numpy as np
 import math
 import analogdef as ana
 
+"""
+Newton-Raphson algorithm with bipolar device
+"""
 #
 #
 DeviceCount=0
@@ -30,7 +33,9 @@ Optdict={}
 Optdict['MaxNewtonIterations']=int(5)
 #
 #
-DeviceCount=ana.readnetlist('netlist_5p4.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+DeviceCount=ana.readnetlist('netlist_5p2_bipolar.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# bandgap circuit, Fig.5.7
+#DeviceCount=ana.readnetlist('netlist_5p4.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #
 NumberOfNodes=len(Nodes)

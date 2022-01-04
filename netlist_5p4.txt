@@ -15,6 +15,7 @@ q9 a out d npn
 q10 a out d npn
 q11 a out d npn
 r2 d vss 59.51
+* comment the below line, for Fig.5.8, otherwise for Fig.5.9
 .ic v(a)=1.5 v(out)=0.9 v(d)=0.06 v(vdd)=2 v(vss)=0
 .options MaxNewtonIterations=40
 .plot v(out) v(a) v(d)

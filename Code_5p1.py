@@ -9,6 +9,11 @@ import numpy
 import matplotlib.pyplot as plt
 import math
 import analogdef as ana
+
+"""
+Newton-Raphson algorithm with simplest MOS model I=K*(Vg-Vs)^2, i.e. CMOS model1
+"""
+
 #
 #
 DeviceCount=0

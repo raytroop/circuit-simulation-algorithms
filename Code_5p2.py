@@ -8,6 +8,16 @@ Created on Thu Feb 28 22:33:04 2019
 import numpy as np
 import analogdef as ana
 
+"""
+Newton-Raphson algorithm with three regions MOS model, i.e. CMOS model2
+1) cut off region, when Vgs - Vt < 0:
+ Id=0
+2) triode region, when Vds < Vgs - Vt:
+ Id=2K((Vgs-Vt)Vds-0.5*Vds^2)
+3) saturation region
+ Id=K(Vgs-Vt)^2*(1+lamda*Vds)
+"""
+
 #
 #
 DeviceCount=0
@@ -29,7 +39,9 @@ Optdict={}
 Optdict['MaxNewtonIterations']=int(5)
 #
 #
-DeviceCount=ana.readnetlist('netlist_5p4.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+DeviceCount=ana.readnetlist('netlist_5p1.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# netlist_5p3 is simple PMOS follower
+#DeviceCount=ana.readnetlist('netlist_5p3.txt',modeldict,ICdict,Plotdict,Printdict,Optdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #
 NumberOfNodes=len(Nodes)
