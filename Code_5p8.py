@@ -12,7 +12,7 @@ import math
 import analogdef as ana
 
 '''
- harmonic balance simulation implementation
+ harmonic balance simulation implementation with PAC
 '''
 
 #
@@ -42,7 +42,7 @@ Optionsdict['iabstol']=1e-7
 #
 DeviceCount=ana.readnetlist('netlist_5p7.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 # DeviceCount=ana.readnetlist('netlist_5p15.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
-#DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
+# DeviceCount=ana.readnetlist('netlist_5p16.txt',modeldict,ICdict,Plotdict,Printdict,Optionsdict,DevType,DevValue,DevLabel,DevNode1,DevNode2,DevNode3,DevModel,Nodes,MaxNumberOfDevices)
 #
 #
 NHarmonics=Optionsdict['NHarmonics']
@@ -171,7 +171,7 @@ if run_PAC:
     STA_rhs=[0 for i in range(MatrixSize)]
     val=[[0 for i in range(100)] for j in range(4)]
     for iter in range(100):
-        omega=iter*1e6*2*3.14159265
+        omega=iter*1e6*2*math.pi
         print('Frequency sweep:',iter*1e6)
         for i in range(DeviceCount):
             for row in range(TotalHarmonics):

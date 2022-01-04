@@ -122,9 +122,11 @@ for i in range(DeviceCount):
 ana.build_SysEqns_HB(SetupDict, SimDict, modeldict)
 #
 #
+drivenAmp = []
+drivenIrms = []
 for AmpIndex in range(1):
-    STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1]=.23577+float (AmpIndex)/100000
-    STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset-1]=.23577+float (AmpIndex)/100000
+    STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1]=.23577+float (AmpIndex)/10000
+    STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset-1]=.23577+float (AmpIndex)/10000
     NewIter=15
     Newtoniter=0
     f[0]=1j
@@ -156,7 +158,32 @@ for AmpIndex in range(1):
     VnTime=ana.idft(Vn,TotalHarmonics)
     VpTime=ana.idft(Vp,TotalHarmonics)
     IOscFilter=ana.idft(IOscFilterSpec,TotalHarmonics)
-    print('rms ',np.real(np.sqrt(np.mean(IOscFilter**2))),STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1])
+
+    drivenAmp_i = STA_rhs[(NumberOfNodes+StimulusIndex)*TotalHarmonics+Jacobian_Offset+1]
+    drivenIrms_i= np.real(np.sqrt(np.mean(IOscFilter**2)))
+    drivenAmp.append(drivenAmp_i)
+    drivenIrms.append(drivenIrms_i)
+
+    print('rms ',drivenIrms_i, drivenAmp_i)
+
+FIGNUM = 0
+plt.figure(FIGNUM)
+FIGNUM += 1
+plt.plot(abs(VnTime))
+plt.title('Steady state harmonics')
+plt.xlabel('time [s]')
+plt.ylabel('Output Amplitude [V]')
+
+plt.show()
+
+if len(drivenAmp) > 1:
+    plt.figure(FIGNUM)
+    FIGNUM += 1
+    plt.plot(drivenAmp, drivenIrms)
+    plt.title('residue current through the flter vs driving voltage amplitude')
+    plt.xlabel('Driven Amplitude [V]')
+    plt.ylabel('Driven Current, rms[A]')
+plt.show()
 
 if run_PNOISE:
     #
@@ -169,7 +196,7 @@ if run_PNOISE:
     STA_rhs=[0 for i in range(MatrixSize)]
     val=[[0 for i in range(100)] for j in range(4)]
     for iter in range(100):
-        omega=(iter)*1e6*2*math.pi
+        omega=iter*1e6*2*math.pi
         for i in range(DeviceCount):
             for row in range(TotalHarmonics):
                 if DevType[i]=='capacitor':
@@ -186,8 +213,9 @@ if run_PNOISE:
         val[1][iter]=abs(sol[3*TotalHarmonics+Jacobian_Offset+1])
         val[2][iter]=abs(sol[3*TotalHarmonics+Jacobian_Offset+2])
         val[3][iter]=20*math.log10(val[1][iter])
+    plt.figure(FIGNUM)
     plt.plot(val[3])
-    plt.show()
-else:
-    plt.plot(abs(VpTime))
+    plt.title('PNOISE output of simple VCO analysis')
+    plt.xlabel('Offset Freq from 1st Harmonic [MHz]')
+    plt.ylabel('20*log10(pnoise) [arbitrary units]')
     plt.show()
