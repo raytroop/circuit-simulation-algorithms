@@ -174,8 +174,6 @@ plt.title('Steady state harmonics')
 plt.xlabel('time [s]')
 plt.ylabel('Output Amplitude [V]')
 
-plt.show()
-
 if len(drivenAmp) > 1:
     plt.figure(FIGNUM)
     FIGNUM += 1
@@ -183,7 +181,6 @@ if len(drivenAmp) > 1:
     plt.title('residue current through the flter vs driving voltage amplitude')
     plt.xlabel('Driven Amplitude [V]')
     plt.ylabel('Driven Current, rms[A]')
-plt.show()
 
 if run_PNOISE:
     #
@@ -218,4 +215,5 @@ if run_PNOISE:
     plt.title('PNOISE output of simple VCO analysis')
     plt.xlabel('Offset Freq from 1st Harmonic [MHz]')
     plt.ylabel('20*log10(pnoise) [arbitrary units]')
-    plt.show()
+
+plt.show()
