@@ -107,5 +107,3 @@ for iter in range(NIterations):
         if DevType[i]=='VoltSource':
             STA_rhs[NumberOfNodes+i]=ana.getSourceValue(DevValue[i],SimTime)
 ana.plotdata(Plotdict,NumberOfNodes,timeVector,val,Nodes)
-
-
