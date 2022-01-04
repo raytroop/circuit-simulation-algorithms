@@ -149,9 +149,14 @@ while Newtoniter < NewIter and abs(max(f)) > iabstol:
         sol[i]=sol[i]-SolutionCorrection[i]
     Newtoniter=Newtoniter+1
 
-for j in range(TotalHarmonics):
-    # always save node 'outp' as Vntime
-    Vn[j]=sol[Nodes.index('outp')*TotalHarmonics+j]
+try:
+    for j in range(TotalHarmonics):
+        # always save node 'outp' as Vntime
+        Vn[j]=sol[Nodes.index('outp')*TotalHarmonics+j]
+except:
+    for j in range(TotalHarmonics):
+        # guess output node is named as 'out' instead of 'outp'
+        Vn[j]=sol[Nodes.index('out')*TotalHarmonics+j]
 VnTime=ana.idft(Vn,TotalHarmonics)
 
 if run_PAC:
